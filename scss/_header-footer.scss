@@ -1,0 +1,368 @@
+header{
+    width: 100%;
+    margin-bottom: 20px;
+    position: absolute;
+    z-index: 2;
+    &.header-type-1{
+        .menu-btn{
+            color: #fff;
+            border: 1px #fff solid;
+        }
+        .menu-icon_line{
+            background-color: #fff;
+        }
+        .switch-language{
+            button{
+                color: #fff;
+                &:hover{
+                    color: darken(#fff, 20%);
+                }
+            }
+        }
+        &.project-header{
+            .menu-btn{
+                padding: 0;
+                margin: 0;
+                border: none;
+                >span{
+                    display: none;
+                }
+            }
+        }
+    }
+    &.header-type-2{
+        position: static;
+        .menu-btn{
+            color: #000;
+            border: 1px #000 solid;
+        }
+        .menu-icon_line{
+            background-color: #000;
+        }
+        .switch-language{
+            button{
+                color: #000;
+                border: 1px solid #000;
+                &:hover{
+                    color: darken(#000, 20%);
+                }
+            }
+        }
+
+    }
+}
+.logo{
+    height: 160px;
+    width: 160px;
+    margin: 10px 0;
+    margin-#{$right}: auto !important;
+    img{
+        height: 100%;
+    }
+}
+.switch-language{
+    margin-#{$right}: 15px;
+    border: 1px #fff solid;
+    @include border-radius(4px);
+    button{
+        padding: 5px;
+        background: transparent;
+        text-transform: uppercase;
+        &:focus{
+            box-shadow: none;
+        }
+    }
+}
+.back-button{
+    margin-#{$right}: 15px;
+    a{
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 14px;
+        i{
+            margin-#{$right}: 7px;
+        }
+    }
+}
+
+.menu-btn{
+    padding: 5px 15px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    font-family: $headingFont;
+    cursor: pointer;
+    z-index:2;
+    @include border-radius(4px)
+}
+.menu-icon{
+    $size: 26px;
+    margin-#{$right}:10px;
+    left: 50px;
+    top: 30px;
+    &_line{
+        height: 2px;
+        width: $size;
+        display: block;
+        transition: transform .2s ease, background-color .5s ease;
+        &:not(:last-child){
+            margin-bottom: 6px;
+        }
+    }
+
+}
+
+.nav{
+    $width: 100vw;
+    $height: 100vh;
+    $transition-easing: cubic-bezier(.77,0,.175,1);
+    font-family: $headingFont;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    top: 0;
+    z-index:1;
+    &:before,&:after{
+        content: "";
+        position: fixed;
+        left: 0;
+        top: 0;
+        width:$width;
+        height:$height;
+        background: $footerClr;
+        z-index: 3;
+        transition: transform $transition-easing $transition--length + s;
+        transform: translateX(0%) translateY(-100%);
+    }
+    &:after{
+        z-index: 3;
+        background-color: $mainClr;
+        background-image: url("../images/bm0.png");
+        background-position: bottom left;
+        background-repeat: no-repeat;
+        background-size: 60% auto;
+        @include delay(0s);
+    }
+
+    &:before{
+        transition-delay: .1s;
+    }
+    &_content{
+        width: 90% !important;
+        position: fixed;
+        left: 50%;
+        top:50%;
+        @include translate(-50% , -50%);
+        width: 100%;
+        color: #fff;
+        text-align: center;
+        font-size: 2vw;
+        font-weight: 200;
+        pointer-events: none;
+        z-index: 4;
+    }
+    
+    &_list{
+        display: flex;
+        justify-content: space-around;
+        padding-right: 0;
+        
+    }
+    &_list-item{
+        transition-delay: $transition--length + s;
+        opacity: 0;
+        @include translate(0 , 100% );
+        transition: opacity .2s ease, transform .3s ease;
+        a{
+            color: #fff;
+        }
+        &.dropdown{
+            &:hover{
+                > .dropdown-menu{
+                    display: block;
+                }
+            }
+            .dropdown-menu{
+                width: 100%;
+                background-color: transparent;
+                border: none;
+                padding: 0;
+                margin: 0;
+                .dropdown-item{
+                    padding: 0.75rem 1.5rem;
+                    font-size: 1.25rem;
+                    color: #d3d3d3;
+                    @include transition(color);
+                    &:before{
+                        content: '-';
+                        margin-#{$left}:-10px;
+                        margin-#{$right}:10px
+                    }
+                    &:hover {
+                        background-color: transparent;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+
+body.nav-active{
+    position: fixed;
+    overflow-y: scroll;
+    $menu-items-count: 6;
+    .menu-btn{
+        border: none;
+        color: #fff !important;
+    }
+    .menu-icon{
+        $size: 26px;
+        &_line{
+            background-color: #fff !important;
+            margin-bottom: 3px !important;
+            transform: translateX(0px) rotate(-45deg);
+        }
+        &_line-left{
+            width: $size / 2;
+            transform: translateX($menu-translate) rotate($menu-rotate);
+        }
+        &_line-right{
+            width: $size / 2;
+            float: right;
+            transform: translateX(-2px) rotate(45deg);
+        }
+    }
+    .nav{
+        visibility:visible;
+        &:before,&:after{
+            transform: translateX(0%) translateY(0%);
+        }
+        &:after{
+            transition-delay: .1s;
+        }
+        &:before{
+            transition-delay: 0s;
+        }
+        &_content{
+            pointer-events: auto;
+        }
+        &_list-item{
+            opacity: 1;
+            text-transform: capitalize;
+            transform: translateX(0%);
+            transition: opacity .3s ease, transform .3s ease, color .3s ease;
+            @for $i from 0 through $menu-items-count {
+                &:nth-child(#{$i}){
+                    transition-delay: $transition--length * $i / 8 + .5 + s;
+                }
+            }
+        }
+    }
+}
+.nav-active-home{
+    overflow-y: hidden !important;
+}
+
+footer{
+    padding: 20px 0;
+    background-color: $footerClr;
+    color: #fff;
+    font-family: $bodyFont-b;
+    p{
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+    img.img-fluid{
+        width: 60%;
+    }
+    .contacts{
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        height: 100%;
+    }
+    .phone-nums{
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10px;
+        color: #a1a1a1;
+        font-size: 12px;
+        span{
+            color: #fff;
+        }
+        p{
+            width: 50%;
+            text-align: center;
+        }
+    }
+    .hotline{
+        margin: 0 auto;
+        display: block;
+        width: 80px;
+    }
+    .subscription{
+        text-transform: capitalize;
+        font-size: 14px;
+    }
+    .form-inline{
+        .input-group{
+            width: 100%;
+            margin: 0;
+        }
+        .input-group-prepend{
+            width: 40px;
+            height: 38px;
+        }
+        input{
+            border:none;
+            background: #fff;
+            height: 38px;
+            width: calc(70% - 40px - 90px);
+            &::placeholder{
+                font-size: 11px;
+            }
+        }
+        button{
+            height: 38px;
+            padding: 0 5px;
+            border-bottom-#{$left}-radius: 0;
+            border-top-#{$left}-radius: 0;
+            width: 90px;
+            font-size: 12px;
+            text-transform: unset;
+        }
+    }
+    .input-group-text{
+        padding: 10px 12px;
+    }
+
+    a{
+        color: #a1a1a1;
+        font-size: 18px;
+        @include transition(color);
+        &:hover{
+            color:#fff;
+        }
+    }
+    .social-links{
+        display: flex;
+        height: 100%;
+        align-items: center;
+        > p{
+            margin-#{$right}: 15px;
+            color: #fff;
+            font-size: 20px;
+        }
+    }
+}
+
+.copyrights{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 0;
+    color: #fff;
+    z-index: 1;
+}
